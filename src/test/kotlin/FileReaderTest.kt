@@ -39,4 +39,13 @@ class FileReaderTest {
             assertEquals(11, array.size)
         }
     }
+
+    @Test
+    fun readDocumentList() {
+        //given
+        val result = reader.readDocuments("input_day4.txt")
+
+        //expected
+        assertEquals(8, result.size)
+    }
 }

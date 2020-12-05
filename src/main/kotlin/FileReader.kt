@@ -1,4 +1,5 @@
 import day2.PasswordWithPolicy
+import day4.Document
 import java.io.File
 import java.util.stream.Collectors
 
@@ -39,6 +40,41 @@ class FileReader() {
         }
 
         return emptyList()
+    }
+
+    fun readDocuments(path: String) : List<Document> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableListOf<Document>()
+            val stringLines = file.readLines()
+            var documentData = ""
+            for (line in stringLines) {
+                if (line.isBlank()) {
+                    result.add(createDocument(documentData))
+                    documentData = ""
+                } else {
+                    if (!documentData.isBlank()) {
+                        documentData += " "
+                    }
+                    documentData += line
+                }
+            }
+            result.add(createDocument(documentData))
+            return result
+        }
+
+        return emptyList()
+    }
+
+    private fun createDocument(documentData: String): Document {
+        val elements = documentData.split(" ")
+        val documentProperties = mutableMapOf<String, String>()
+        for (element in elements) {
+            val keyValue = element.split(":")
+            documentProperties[keyValue[0]] = keyValue[1]
+        }
+        return Document(documentProperties)
     }
 
     private fun returnFileIfExists(path: String) : File? {

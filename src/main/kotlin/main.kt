@@ -2,12 +2,13 @@ import day1.ExpensesReport
 import day2.PasswordValidator
 import day3.Move
 import day3.SlopeRider
+import day4.DocumentValidation
 
 val reader = FileReader()
 
 fun main(args: Array<String>) {
     println(args.toString())
-    day3()
+    day4()
 }
 
 fun day1() {
@@ -39,4 +40,10 @@ fun day3() {
 
     println("Trees on each route: 1-1 $result11, 3-1 $result31, 5-1 $result51, 7-1 $result71, 1-2 $result12")
     println("Multiplication of trees on the way down for all moves: $multiplication")
+}
+
+fun day4() {
+    println("Executing day4")
+    val documentValidation = DocumentValidation(reader.readDocuments("input_day4.txt"))
+    println("There is ${documentValidation.numberOfPassports()} passports within documents")
 }

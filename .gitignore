@@ -27,4 +27,3 @@ build/*
 gradle/*
 .idea
 .gradle
-*.kts
