@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class PasswordValidatorTest {
 
-    val fileReader = FileReader()
+    private val fileReader = FileReader()
 
     @Test
     fun correctNumberOfValidPasswords() {

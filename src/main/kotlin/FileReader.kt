@@ -67,6 +67,16 @@ class FileReader() {
         return emptyList()
     }
 
+    fun readSeatCodes(path: String) : List<String> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            return file.readLines()
+        }
+
+        return emptyList()
+    }
+
     private fun createDocument(documentData: String): Document {
         val elements = documentData.split(" ")
         val documentProperties = mutableMapOf<String, String>()

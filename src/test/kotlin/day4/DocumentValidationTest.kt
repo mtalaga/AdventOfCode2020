@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class DocumentValidationTest {
 
-    val reader = FileReader()
+    private val reader = FileReader()
 
     @Test
     fun correctNumberOfValidDocuments() {

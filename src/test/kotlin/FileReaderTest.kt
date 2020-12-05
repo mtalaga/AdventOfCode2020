@@ -4,7 +4,7 @@ import kotlin.test.assertEquals
 
 class FileReaderTest {
 
-    val reader = FileReader()
+    private val reader = FileReader()
 
     @Test
     fun readIntsFromFileWhichExists() {
@@ -47,5 +47,14 @@ class FileReaderTest {
 
         //expected
         assertEquals(8, result.size)
+    }
+
+    @Test
+    fun readSeatCodes() {
+        //given
+        val result = reader.readSeatCodes("input_day5.txt")
+
+        //expected
+        assertEquals(4, result.size)
     }
 }

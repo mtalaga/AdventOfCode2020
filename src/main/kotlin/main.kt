@@ -3,12 +3,13 @@ import day2.PasswordValidator
 import day3.Move
 import day3.SlopeRider
 import day4.DocumentValidation
+import day5.SeatCalculator
 
 val reader = FileReader()
 
 fun main(args: Array<String>) {
     println(args.toString())
-    day4()
+    day5()
 }
 
 fun day1() {
@@ -46,4 +47,12 @@ fun day4() {
     println("Executing day4")
     val documentValidation = DocumentValidation(reader.readDocuments("input_day4.txt"))
     println("There is ${documentValidation.numberOfPassports()} passports within documents")
+}
+
+fun day5() {
+    println("Executing day5")
+    val seatCalculator = SeatCalculator()
+    val seats = seatCalculator.calculateSeats(reader.readSeatCodes("input_day5.txt"))
+    println("Highest seatID is ${seatCalculator.highestSeatID(seats.keys)}")
+    println("Free seatIDs ${seatCalculator.missingSeatIDs(reader.readSeatCodes("input_day5.txt"))}")
 }
