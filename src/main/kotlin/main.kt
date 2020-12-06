@@ -9,7 +9,7 @@ val reader = FileReader()
 
 fun main(args: Array<String>) {
     println(args.toString())
-    day5()
+    day6()
 }
 
 fun day1() {
@@ -55,4 +55,10 @@ fun day5() {
     val seats = seatCalculator.calculateSeats(reader.readSeatCodes("input_day5.txt"))
     println("Highest seatID is ${seatCalculator.highestSeatID(seats.keys)}")
     println("Free seatIDs ${seatCalculator.missingSeatIDs(reader.readSeatCodes("input_day5.txt"))}")
+}
+
+fun day6() {
+    println("Executing day6")
+    val questionare = Questionnaire(reader.readQuestionnaires("input_day6.txt"))
+    println("Number of yes questions: ${questionare.calculateAllYesAnswersInGroups()}")
 }

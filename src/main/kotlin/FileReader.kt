@@ -77,6 +77,28 @@ class FileReader() {
         return emptyList()
     }
 
+    fun readQuestionnaires(path: String) : List<Group> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableListOf<Group>()
+            val stringLines = file.readLines()
+            var group = mutableListOf<String>()
+            for (line in stringLines) {
+                if (line.isBlank()) {
+                    result.add(Group(group))
+                    group = mutableListOf()
+                } else {
+                    group.add(line)
+                }
+            }
+            result.add(Group(group))
+            return result
+        }
+
+        return emptyList()
+    }
+
     private fun createDocument(documentData: String): Document {
         val elements = documentData.split(" ")
         val documentProperties = mutableMapOf<String, String>()
