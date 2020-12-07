@@ -66,4 +66,13 @@ class FileReaderTest {
         //expected
         assertEquals(5, result.size)
     }
+
+    @Test
+    fun readBags() {
+        //given
+        val result = reader.readBags("input_day7.txt")
+
+        //expected
+        assertEquals(9, result.size)
+    }
 }

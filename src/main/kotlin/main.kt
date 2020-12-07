@@ -4,12 +4,13 @@ import day3.Move
 import day3.SlopeRider
 import day4.DocumentValidation
 import day5.SeatCalculator
+import day7.BagList
 
 val reader = FileReader()
 
 fun main(args: Array<String>) {
     println(args.toString())
-    day6()
+    day7()
 }
 
 fun day1() {
@@ -61,4 +62,11 @@ fun day6() {
     println("Executing day6")
     val questionare = Questionnaire(reader.readQuestionnaires("input_day6.txt"))
     println("Number of yes questions: ${questionare.calculateAllYesAnswersInGroups()}")
+}
+
+fun day7() {
+    println("Executing day7")
+    val bagHandler = BagList(reader.readBags("input_day7.txt"))
+    println("Number of bags in which we can put shiny gold bag: ${bagHandler.residesInBags("shiny gold")}")
+    println("Number of bags inside shiny gold: ${bagHandler.countBagsInside("shiny gold")}")
 }

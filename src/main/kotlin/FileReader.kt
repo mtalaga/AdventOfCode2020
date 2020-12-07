@@ -1,5 +1,6 @@
 import day2.PasswordWithPolicy
 import day4.Document
+import day7.Bag
 import java.io.File
 import java.util.stream.Collectors
 
@@ -96,6 +97,36 @@ class FileReader() {
             return result
         }
 
+        return emptyList()
+    }
+
+    fun readBags(path: String) : List<Bag> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableMapOf<String, Bag>()
+            val stringLines = file.readLines()
+            for (line in stringLines) {
+                val splittedByContain = line.split(" contain ")
+                val name = splittedByContain[0].replace(" bags", "")
+                result[name] = Bag(name)
+            }
+            for (line in stringLines) {
+                val splittedByContain = line.split(" contain ")
+                if (splittedByContain[1] != "no other bags.") {
+                    val name = splittedByContain[0].replace(" bags", "")
+                    val separateContainsLine = splittedByContain[1].split(", ")
+                    for (bag in separateContainsLine) {
+                        val words = bag.split(" ")
+                        val containsName = words[1] + " " + words[2]
+                        if (result.containsKey(name) && result.containsKey(containsName)) {
+                            result[name]!!.addBag(result[containsName]!!, words[0].toInt())
+                        }
+                    }
+                }
+            }
+            return result.values.toList()
+        }
         return emptyList()
     }
 
