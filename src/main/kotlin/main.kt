@@ -1,16 +1,24 @@
 import day1.ExpensesReport
+import day10.Joltage
+import day11.SeatingSystem
+import day12.Guidance
+import day13.BusSchedule
+import day14.BitMask
+import day15.ElfGame
 import day2.PasswordValidator
 import day3.Move
 import day3.SlopeRider
 import day4.DocumentValidation
 import day5.SeatCalculator
 import day7.BagList
+import day8.Program
+import day9.XmasEncoding
 
 val reader = FileReader()
 
 fun main(args: Array<String>) {
-    println(args.toString())
-    day7()
+    args.forEach { println("ARG: $it") }
+    day14()
 }
 
 fun day1() {
@@ -69,4 +77,63 @@ fun day7() {
     val bagHandler = BagList(reader.readBags("input_day7.txt"))
     println("Number of bags in which we can put shiny gold bag: ${bagHandler.residesInBags("shiny gold")}")
     println("Number of bags inside shiny gold: ${bagHandler.countBagsInside("shiny gold")}")
+}
+
+fun day8() {
+    println("Executing day8")
+    val program = Program(reader.readProgram("input_day8.txt"))
+    println("Program state just before overload: ${program.findAccumulatorValueBeforeLoop()}")
+    println("Correct program state after fix: ${program.fixProgramWithLoop()}")
+}
+
+fun day9() {
+    println("Executing day9")
+    val encoding = XmasEncoding(25, reader.readLongValuesFromFile("input_day9.txt"))
+    println("Values which could not be constructed from previous 25: ${encoding.findNumbersWhichAreNotSumOfPreviousPreambleValues()}")
+    val contignuousSets = encoding.findContiguouSetOfAtLeastTwoNumbersWhichAreNotSumOfPreviousPreambleValues()
+    val sumsOfLargestAndSmallest = contignuousSets.map { Pair(it.first, it.second.sorted()) }.map { Pair(it.first, it.second[0] + it.second[it.second.size-1]) }
+    println("Sets which are producing wrong values ${contignuousSets} and sums of the lowest and highest values = ${sumsOfLargestAndSmallest}")
+}
+
+fun day10() {
+    println("Executing day10")
+    val joltage = Joltage(reader.readIntValuesFromFile("input_day10.txt"))
+    val pairs = joltage.findNumberOfJoltageDifferences(joltage.input)
+    println("Multiplied joltages: ${pairs[1]!! * pairs[3]!!}")
+    println("Count of possible combinations: ${joltage.findNumberOfPossibleCombinations()}")
+}
+
+fun day11() {
+    println("Executing day11")
+    val seatState = SeatingSystem(reader.readSeatMap("input_day11.txt"))
+    println("Number of occupied seats, when rotation stops: ${seatState.calculateOccupiedSeatsWhenChangesStops()}")
+    println("Number of occupied seats, when rotation stops taking into consideration all visible seats: ${seatState.calculateOccupiedSeatsWhenChangesStopsPart2()}")
+}
+
+fun day12() {
+    println("Executing day12")
+    val guidance = Guidance()
+    guidance.applyDirectionsToState(reader.readDirections("input_day12.txt"))
+    println("Mannhatan distance after applying directions: ${guidance.calculateManhattanDistance()}")
+}
+
+fun day13() {
+    println("Executing day13")
+    val timestampAndLines = reader.readBusSchedule("input_day13.txt")
+    val busSchedule = BusSchedule(timestampAndLines.first, timestampAndLines.second)
+    println("Multiplication of bus line with lowest wait time: ${busSchedule.calculateEarlierBusWithWaitingTimeMultiplication()}")
+}
+
+fun day14() {
+    println("Executing day14")
+    val bitmask = BitMask(reader.readMemory("input_day14.txt"))
+    println("Sum of non zero addresses in memory ${bitmask.decodeValuesAndSumNonZeroMemory()}")
+    println("Sum of non zero addresses in memory after applying mask to memory bank ${bitmask.decodeMemoryAddressAndSumNonZeroValues()}")
+}
+
+fun day15() {
+    println("Executing day15")
+    val elfGame = ElfGame()
+    println("Value of 2020th element of elf game is ${elfGame.play(listOf(0,14,1,3,7,9), 2020)}")
+    println("Value of 30000000th element of elf game is ${elfGame.play(listOf(0,14,1,3,7,9), 30000000)}")
 }

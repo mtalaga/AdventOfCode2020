@@ -1,11 +1,19 @@
+import day11.SeatState
+import day12.Action
+import day12.Direction
+import day12.Move
+import day14.BitMaskCharacter
+import day14.Memory
 import day2.PasswordWithPolicy
 import day4.Document
 import day7.Bag
+import day8.Operation
 import java.io.File
 import java.util.stream.Collectors
+import javax.swing.text.MaskFormatter
 
 class FileReader() {
-    fun readIntValuesFromFile(path: String) : List<Int> {
+    fun readIntValuesFromFile(path: String): List<Int> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
@@ -16,23 +24,34 @@ class FileReader() {
         return emptyList()
     }
 
-    fun readPasswordsWithPolicyFromFile(path: String) : List<PasswordWithPolicy> {
+    fun readLongValuesFromFile(path: String): List<Long> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val stringLines = file.readLines()
+            return stringLines.stream().map { it.toLong() }.collect(Collectors.toList())
+        }
+
+        return emptyList()
+    }
+
+    fun readPasswordsWithPolicyFromFile(path: String): List<PasswordWithPolicy> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
             val stringLines = file.readLines()
             return stringLines.stream()
-                .filter{ it != "" }
+                .filter { it != "" }
                 .map {
-                val separate = it.split(" ")
-                val occurences = separate[0].split( "-")
-                PasswordWithPolicy(occurences[0].toInt(), occurences[1].toInt(), separate[1][0], separate[2])
-            }.collect(Collectors.toList())
+                    val separate = it.split(" ")
+                    val occurences = separate[0].split("-")
+                    PasswordWithPolicy(occurences[0].toInt(), occurences[1].toInt(), separate[1][0], separate[2])
+                }.collect(Collectors.toList())
         }
         return emptyList()
     }
 
-    fun readSlopeRiderMap(path: String) : List<CharArray> {
+    fun readSlopeRiderMap(path: String): List<CharArray> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
@@ -43,7 +62,7 @@ class FileReader() {
         return emptyList()
     }
 
-    fun readDocuments(path: String) : List<Document> {
+    fun readDocuments(path: String): List<Document> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
@@ -68,7 +87,7 @@ class FileReader() {
         return emptyList()
     }
 
-    fun readSeatCodes(path: String) : List<String> {
+    fun readSeatCodes(path: String): List<String> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
@@ -78,7 +97,7 @@ class FileReader() {
         return emptyList()
     }
 
-    fun readQuestionnaires(path: String) : List<Group> {
+    fun readQuestionnaires(path: String): List<Group> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
@@ -100,7 +119,7 @@ class FileReader() {
         return emptyList()
     }
 
-    fun readBags(path: String) : List<Bag> {
+    fun readBags(path: String): List<Bag> {
         val file = returnFileIfExists(path)
 
         if (file != null) {
@@ -130,6 +149,135 @@ class FileReader() {
         return emptyList()
     }
 
+    fun readProgram(path: String): List<Operation> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableListOf<Operation>()
+            val stringLines = file.readLines()
+            for (line in stringLines) {
+                val splited = line.split(" ")
+                result.add(Operation(splited[0], splited[1].toInt()))
+            }
+
+            return result
+        }
+
+        return emptyList()
+    }
+
+    fun readSeatMap(path: String): List<List<SeatState>> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableListOf<List<SeatState>>()
+            val stringLines = file.readLines()
+            for (line in stringLines) {
+                result.add(line.toCharArray().map { SeatState.ofSymbol(it) }.toList())
+            }
+            return result
+        }
+
+        return emptyList()
+    }
+
+    fun readDirections(path: String): List<Pair<Action, Int>> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableListOf<Pair<Action, Int>>()
+            val stringLines = file.readLines()
+            for (line in stringLines) {
+                var action: Action = when (line[0]) {
+                    'N' -> Direction.NORTH
+                    'E' -> Direction.EAST
+                    'W' -> Direction.WEST
+                    'S' -> Direction.SOUTH
+                    'F' -> Move.FORWARD
+                    'L' -> Move.LEFT
+                    'R' -> Move.RIGHT
+                    else -> throw Exception("Incorrect symbol ${line[0]}")
+                }
+                result.add(Pair(action, line.substring(1 until line.length).toInt()))
+            }
+            return result
+        }
+
+        return emptyList()
+    }
+
+    fun readBusSchedule(path: String): Pair<Int, List<Int>> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val stringLines = file.readLines()
+            var timestamp = 0
+            val lines = mutableListOf<Int>()
+            for (line in stringLines) {
+                if (line.contains(",")) {
+                    val splitted = line.split(",")
+                    for (element in splitted) {
+                        if (element != "x") {
+                            lines.add(element.toInt())
+                        }
+                    }
+                } else {
+                    timestamp = line.toInt()
+                }
+            }
+
+
+            return Pair(timestamp, lines)
+        }
+
+        return Pair(0, emptyList())
+    }
+
+    fun readMemory(path: String): List<Memory> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val stringLines = file.readLines()
+            var result = mutableListOf<Memory>()
+
+            var currentMask = mutableListOf<Pair<Int, BitMaskCharacter>>()
+            var currentMemoryBanks = mutableListOf<Pair<Int, Int>>()
+
+            for (line in stringLines) {
+                if (line.startsWith("mask")) {
+                    if (currentMask.size > 0) {
+                        result.add(Memory(currentMask, currentMemoryBanks))
+                        currentMask = mutableListOf()
+                        currentMemoryBanks = mutableListOf()
+                    }
+                    val maskLine = line.replace("mask = ", "")
+                    for (character in 0 until maskLine.length) {
+                        currentMask.add(
+                            Pair(
+                                maskLine.length - 1 - character,
+                                BitMaskCharacter.fromChar(maskLine[character])
+                            )
+                        )
+
+                    }
+                } else {
+                    val splittedLine = line.split(" = ")
+                    currentMemoryBanks.add(
+                        Pair(
+                            splittedLine[0].replace("mem[", "").replace("]", "").toInt(),
+                            splittedLine[1].toInt()
+                        )
+                    )
+                }
+            }
+
+            result.add(Memory(currentMask, currentMemoryBanks))
+            return result
+        }
+
+        return emptyList()
+    }
+
     private fun createDocument(documentData: String): Document {
         val elements = documentData.split(" ")
         val documentProperties = mutableMapOf<String, String>()
@@ -140,7 +288,7 @@ class FileReader() {
         return Document(documentProperties)
     }
 
-    private fun returnFileIfExists(path: String) : File? {
+    private fun returnFileIfExists(path: String): File? {
         val file = File(this::class.java.classLoader.getResource(path).toURI())
 
         if (file.exists() && file.isFile) {
