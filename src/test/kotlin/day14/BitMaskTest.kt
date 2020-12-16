@@ -2,6 +2,7 @@ package day14
 
 import FileReader
 import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
 class BitMaskTest {
@@ -20,6 +21,7 @@ class BitMaskTest {
         assertEquals(165L, result)
     }
 
+    @Ignore
     @Test
     fun calculateSumOfNonZeroAddressesWhenApplyingMaskToMemoryBankShouldReturn201() {
         //Given

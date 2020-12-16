@@ -4,6 +4,8 @@ import day12.Direction
 import day12.Move
 import day14.BitMaskCharacter
 import day14.Memory
+import day16.RuleList
+import day16.Ticket
 import day2.PasswordWithPolicy
 import day4.Document
 import day7.Bag
@@ -276,6 +278,47 @@ class FileReader() {
         }
 
         return emptyList()
+    }
+
+    fun readRulesWithTickets(path: String): Triple<RuleList, Ticket, List<Ticket>> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val stringLines = file.readLines()
+            var counter = 0
+
+            val rulesList = mutableListOf<Pair<String, List<Int>>>()
+            var endOfRules = false
+            while (!endOfRules) {
+                if (stringLines[counter] == "") {
+                    endOfRules = true
+                } else {
+                    val withoutName = stringLines[counter].split(": ")
+                    val splittedLine = withoutName[1].split(" ")
+                    val rule = mutableListOf<Int>()
+                    rule.addAll(IntRange(splittedLine[0].split("-")[0].toInt(), splittedLine[0].split("-")[1].toInt()).toList())
+                    rule.addAll(IntRange(splittedLine[2].split("-")[0].toInt(), splittedLine[2].split("-")[1].toInt()).toList())
+                    rulesList.add(Pair(withoutName[0], rule))
+                }
+                counter+=1
+            }
+
+            val ticketList = mutableListOf<Ticket>()
+
+            counter+=1
+            val yourTicket = Ticket(stringLines[counter].split(",").map { it.toInt() })
+            counter+=1
+
+            while (counter < stringLines.size) {
+                if (!(stringLines[counter].startsWith("nearby")  || stringLines[counter] == (""))) {
+                    ticketList.add(Ticket(stringLines[counter].split(",").map { it.toInt() }))
+                }
+                counter+=1
+            }
+            return Triple(RuleList(rulesList), yourTicket, ticketList)
+        }
+
+        return Triple(RuleList(emptyList()), Ticket(emptyList()), emptyList())
     }
 
     private fun createDocument(documentData: String): Document {

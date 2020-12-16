@@ -5,6 +5,8 @@ import day12.Guidance
 import day13.BusSchedule
 import day14.BitMask
 import day15.ElfGame
+import day16.Ticket
+import day16.TicketDecoder
 import day2.PasswordValidator
 import day3.Move
 import day3.SlopeRider
@@ -18,7 +20,7 @@ val reader = FileReader()
 
 fun main(args: Array<String>) {
     args.forEach { println("ARG: $it") }
-    day14()
+    day16()
 }
 
 fun day1() {
@@ -136,4 +138,12 @@ fun day15() {
     val elfGame = ElfGame()
     println("Value of 2020th element of elf game is ${elfGame.play(listOf(0,14,1,3,7,9), 2020)}")
     println("Value of 30000000th element of elf game is ${elfGame.play(listOf(0,14,1,3,7,9), 30000000)}")
+}
+
+fun day16() {
+    println("Executing day16")
+    val triple = reader.readRulesWithTickets("input_day16.txt")
+    val ticketDecoder = TicketDecoder(triple.first, triple.second, triple.third)
+    println("Sum of not valid values among others tickets: ${ticketDecoder.sumOfNotValidValues()}")
+    println("Multiplication of not valid values among others tickets: ${ticketDecoder.multiplyDepartureValuesFromMyTicket()}")
 }

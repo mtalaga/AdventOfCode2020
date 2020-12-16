@@ -146,4 +146,16 @@ class FileReaderTest {
         assertTrue(result[0].addressChanges.contains(Pair(7, 101)))
         assertTrue(result[0].addressChanges.contains(Pair(8, 0)))
     }
+
+    @Test
+    fun readRulesWithTickets() {
+        //given
+        val result = reader.readRulesWithTickets("input_day16.txt")
+
+        //expected
+        assertEquals(3, result.first.rule.size)
+        assertEquals("class", result.first.rule[0].first)
+        assertTrue(result.second.valueList.containsAll(listOf(7,1,14)))
+        assertEquals(4, result.third.size)
+    }
 }
