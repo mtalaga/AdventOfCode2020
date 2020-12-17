@@ -7,6 +7,8 @@ import day14.BitMask
 import day15.ElfGame
 import day16.Ticket
 import day16.TicketDecoder
+import day17.ConwayCube
+import day17.CubeState
 import day2.PasswordValidator
 import day3.Move
 import day3.SlopeRider
@@ -20,7 +22,7 @@ val reader = FileReader()
 
 fun main(args: Array<String>) {
     args.forEach { println("ARG: $it") }
-    day16()
+    day17()
 }
 
 fun day1() {
@@ -146,4 +148,10 @@ fun day16() {
     val ticketDecoder = TicketDecoder(triple.first, triple.second, triple.third)
     println("Sum of not valid values among others tickets: ${ticketDecoder.sumOfNotValidValues()}")
     println("Multiplication of not valid values among others tickets: ${ticketDecoder.multiplyDepartureValuesFromMyTicket()}")
+}
+
+fun day17() {
+    println("Executing day17")
+    val conwayCube = ConwayCube(reader.readCubeSlice("input_day17.txt"))
+    println("Active cubes left after 6 cycles: ${conwayCube.cubesLeftInStateAfterCycles(CubeState.ACTIVE, 7)}")
 }

@@ -158,4 +158,16 @@ class FileReaderTest {
         assertTrue(result.second.valueList.containsAll(listOf(7,1,14)))
         assertEquals(4, result.third.size)
     }
+
+    @Test
+    fun readCubeSlice() {
+        //given
+        val result = reader.readCubeSlice("input_day17.txt")
+
+        //expected
+        assertEquals(3, result.size)
+        for (array in result) {
+            assertEquals(3, array.size)
+        }
+    }
 }

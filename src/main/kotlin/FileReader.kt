@@ -6,6 +6,7 @@ import day14.BitMaskCharacter
 import day14.Memory
 import day16.RuleList
 import day16.Ticket
+import day17.CubeState
 import day2.PasswordWithPolicy
 import day4.Document
 import day7.Bag
@@ -319,6 +320,25 @@ class FileReader() {
         }
 
         return Triple(RuleList(emptyList()), Ticket(emptyList()), emptyList())
+    }
+
+    fun readCubeSlice(path: String): List<List<CubeState>> {
+        val file = returnFileIfExists(path)
+
+        if (file != null) {
+            val result = mutableListOf<List<CubeState>>()
+            val stringLines = file.readLines()
+            for (line in stringLines) {
+                val currentLine = mutableListOf<CubeState>()
+                for (character in line.chars()) {
+                    currentLine.add(CubeState.ofSymbol(character.toChar()))
+                }
+                result.add(currentLine)
+            }
+
+            return result
+        }
+        return emptyList()
     }
 
     private fun createDocument(documentData: String): Document {
