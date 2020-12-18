@@ -14,7 +14,7 @@ class SeatCalculatorTest {
         val seatCalculator = SeatCalculator()
 
         //when
-        val result = seatCalculator.calculateSeats(reader.readSeatCodes("input_day5.txt"))
+        val result = seatCalculator.calculateSeats(reader.readStringLines("input_day5.txt"))
 
         //then
         assertEquals(4, result.size)
@@ -28,7 +28,7 @@ class SeatCalculatorTest {
     fun shouldReturnHighestSeatId() {
         //given
         val seatCalculator = SeatCalculator()
-        val seats = seatCalculator.calculateSeats(reader.readSeatCodes("input_day5.txt"))
+        val seats = seatCalculator.calculateSeats(reader.readStringLines("input_day5.txt"))
 
         //when
         val result = seatCalculator.highestSeatID(seats.keys)

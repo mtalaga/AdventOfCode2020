@@ -5,10 +5,10 @@ import day12.Guidance
 import day13.BusSchedule
 import day14.BitMask
 import day15.ElfGame
-import day16.Ticket
 import day16.TicketDecoder
 import day17.ConwayCube
 import day17.CubeState
+import day18.ExpressionEvaluator
 import day2.PasswordValidator
 import day3.Move
 import day3.SlopeRider
@@ -22,7 +22,7 @@ val reader = FileReader()
 
 fun main(args: Array<String>) {
     args.forEach { println("ARG: $it") }
-    day17()
+    day18()
 }
 
 fun day1() {
@@ -65,9 +65,9 @@ fun day4() {
 fun day5() {
     println("Executing day5")
     val seatCalculator = SeatCalculator()
-    val seats = seatCalculator.calculateSeats(reader.readSeatCodes("input_day5.txt"))
+    val seats = seatCalculator.calculateSeats(reader.readStringLines("input_day5.txt"))
     println("Highest seatID is ${seatCalculator.highestSeatID(seats.keys)}")
-    println("Free seatIDs ${seatCalculator.missingSeatIDs(reader.readSeatCodes("input_day5.txt"))}")
+    println("Free seatIDs ${seatCalculator.missingSeatIDs(reader.readStringLines("input_day5.txt"))}")
 }
 
 fun day6() {
@@ -154,4 +154,11 @@ fun day17() {
     println("Executing day17")
     val conwayCube = ConwayCube(reader.readCubeSlice("input_day17.txt"))
     println("Active cubes left after 6 cycles: ${conwayCube.cubesLeftInStateAfterCycles(CubeState.ACTIVE, 7)}")
+}
+
+fun day18() {
+    println("Executing day18")
+    val expressionEvaluator = ExpressionEvaluator()
+    println("Sum of input expressions: ${expressionEvaluator.sumExpressionResults(reader.readStringLines("input_day18.txt"))}")
+    println("Sum of input expressions with plus first: ${expressionEvaluator.sumExpressionResultsWithPlusFirst(reader.readStringLines("input_day18.txt"))}")
 }

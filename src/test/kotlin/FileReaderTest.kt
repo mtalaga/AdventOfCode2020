@@ -66,7 +66,7 @@ class FileReaderTest {
     @Test
     fun readSeatCodes() {
         //given
-        val result = reader.readSeatCodes("input_day5.txt")
+        val result = reader.readStringLines("input_day5.txt")
 
         //expected
         assertEquals(4, result.size)

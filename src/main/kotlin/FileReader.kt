@@ -90,7 +90,7 @@ class FileReader() {
         return emptyList()
     }
 
-    fun readSeatCodes(path: String): List<String> {
+    fun readStringLines(path: String): List<String> {
         val file = returnFileIfExists(path)
 
         if (file != null) {

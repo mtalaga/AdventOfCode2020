@@ -9,9 +9,9 @@ class ConwayCube(private val firstSlice: List<List<CubeState>>) {
         cube.add(createEmptySlice(firstSlice.size))
 
         var currentCycle = cycles
-        while (currentCycle >= 0) {
+        while (currentCycle > 0) {
             val newCube = mutableListOf<List<List<CubeState>>>()
-            newCube.add(createEmptySlice(firstSlice.size))
+            newCube.add(firstSlice)
             for (i in cube.indices) {
                 val newCubeSlice = mutableListOf<List<CubeState>>()
                 for (j in cube[i].indices) {
@@ -23,7 +23,7 @@ class ConwayCube(private val firstSlice: List<List<CubeState>>) {
                 }
                 newCube.add(newCubeSlice)
             }
-            newCube.add(createEmptySlice(firstSlice.size))
+            newCube.add(firstSlice)
             cube = newCube
             currentCycle -= 1
         }
@@ -50,10 +50,6 @@ class ConwayCube(private val firstSlice: List<List<CubeState>>) {
             .fold(listOf(listOf<Int>())) { acc, set ->
                 acc.flatMap { list -> set.map { element -> list + element } }
             }
-            .filter { !it.contains(-1) }
-            .filter { it[0] != cube.size }
-            .filter { it[1] != firstSlice.size }
-            .filter { it[2] != firstSlice.size }
             .map { Triple(it[0], it[1], it[2]) }
             .filter { it != element }
             .toSet()

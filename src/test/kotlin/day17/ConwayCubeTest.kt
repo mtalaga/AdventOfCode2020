@@ -1,6 +1,7 @@
 package day17
 
 import FileReader
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -8,6 +9,7 @@ class ConwayCubeTest {
 
     private val reader = FileReader()
 
+    @Ignore
     @Test
     fun countActivesCubesAfterSixCycles() {
         //Given
